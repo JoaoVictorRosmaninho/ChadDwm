@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# this is just an example!
+# add your autostart stuffs here
+xbacklight -set 5 &
+xmodmap ~/.xmodmap-sid &
+picom &
+xrdb merge ~/.Xresources &
+feh --bg-fill /home/jv/.wallpapers/night.png
+# run bar script and dwm ( do not remove this )
+/home/jv/.src/chadwm/scripts/./bar.sh &
+dwm
