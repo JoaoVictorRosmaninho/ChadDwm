@@ -56,7 +56,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-//static char *tags[] = {"", "", "", "", ""};
+//static char *tags[] = {"","", "", "", "", ""};
 static char *tags[] = { "", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
 
 static const char* eww[]      = { "eww", "open" , "eww", NULL };
@@ -67,7 +67,7 @@ static const Launcher launchers[] = {
 };
 
 static const int tagschemes[] = { SchemeTag1, SchemeTag2, SchemeTag3,
-                                  SchemeTag4, SchemeTag5
+                                  SchemeTag4, SchemeTag5, SchemeTag1, SchemeTag2, SchemeTag3, SchemeTag4 
                                 };
 
 static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
@@ -131,6 +131,8 @@ static const char *ranger[] = {"st", "ranger",  NULL};
 static const char *rofi[]  = { "rofi", "-combi-modi", "drun,ssh", "-theme", "solarized", "-font", "hack 10", "-show", "combi",  "-icon-theme", "Papirus", "-show-icons", NULL };
 static const char *xi[] = {"xbacklight", "-inc", "7", NULL};
 static const char *xd[] = {"xbacklight", "-dec", "7", NULL};
+static const char *scrot[] = {"scrot", "/home/jv/Pictures/screenshots/%Y-%m-%d-%T-screenshot.jpg", NULL};
+static const char *scrot_retangule[] = {"scrot", "-s", "/home/jv/Pictures/screenshots/%Y-%m-%d-%T-screenshot.jpg", NULL};
 
 static Key keys[] = {
     /* modifier                     key        function        argument */
@@ -142,20 +144,24 @@ static Key keys[] = {
     {MODKEY, XK_u, spawn,   SHCMD("maim --select | xclip -selection clipboard -t image/png")},
     {0, XF86MonBrightnessDown, spawn, {.v = xd}},
     {0, XF86MonBrightnessUp, spawn, {.v = xi}},
+    { MODKEY,             	    XK_Print,  spawn,          {.v = scrot } },
+    { MODKEY,                       XK_o,      spawn,          {.v = scrot_retangule } },
+    { MODKEY,                       XK_Right,  view_adjacent,  { .i = +1 } },
+    { MODKEY,                       XK_Left,   view_adjacent,  { .i = -1 } }, 
     { MODKEY,                       XK_b,      togglebar,      {0} },
     { MODKEY|ControlMask,           XK_w,      tabmode,        { -1 } },
-    { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-    { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+    { MODKEY,                       XK_j,      focusstack,     {.i = -1 } },
+    { MODKEY,                       XK_k,      focusstack,     {.i = +1 } },
     { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-    { MODKEY,			XK_r, 	   spawn, 	   {.v = ranger }}, 
+    { MODKEY,			    XK_r,      spawn, 	       {.v = ranger }}, 
     { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
     { MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
     { MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
     { MODKEY|ShiftMask,             XK_h,      setcfact,       {.f = +0.25} },
     { MODKEY|ShiftMask,             XK_l,      setcfact,       {.f = -0.25} },
     { MODKEY|ShiftMask,             XK_o,      setcfact,       {.f =  0.00} },
-    { MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
-    { MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
+    { MODKEY|ShiftMask,             XK_j,      movestack,      {.i = -1 } },
+    { MODKEY|ShiftMask,             XK_k,      movestack,      {.i = +1 } },
     { MODKEY,                       XK_Return, zoom,           {0} },
     { MODKEY,                       XK_Tab,    view,           {0} },
 
