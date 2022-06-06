@@ -126,7 +126,8 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *term[]  = {  "st", NULL }; // change this to your term
+//static const char *term[]  = {  "st", NULL }; // change this to your term
+static const char *term[]  = {  "xfce4-terminal", NULL }; // change this to your term
 static const char *ranger[] = {"st", "ranger",  NULL};
 static const char *rofi[]  = { "rofi", "-combi-modi", "drun,ssh", "-theme", "solarized", "-font", "hack 10", "-show", "combi",  "-icon-theme", "Papirus", "-show-icons", NULL };
 static const char *xi[] = {"xbacklight", "-inc", "7", NULL};

@@ -50,6 +50,12 @@ wlan() {
 	esac
 }
 
+disk() {
+    hdd="$(df -h | awk 'NR==4{print $5}')"
+    printf "root ^c$red^ $hdd%"
+    printf "^c$white^"
+}
+
 temp() {
   TEMP="$(sensors|awk 'BEGIN{i=0;t=0;b=0}/id [0-9]/{b=$4};/Core/{++i;t+=$3}END{if(i>0){printf("%0.1f\n",t/i)}else{sub(/[^0-9.]/,"",b);print b}}')"
 printf "t° ^c$red^ $TEMP"
@@ -66,5 +72,5 @@ while true; do
   [ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(pkg_updates)
   interval=$((interval + 1))
 
-  sleep 1 && xsetroot -name "[$(cpu)] [$(mem)] [$(temp)] [$(wlan)] [$(clock)]"
+  sleep 1 && xsetroot -name "[$(cpu)] [$(mem)] [$(temp)] [$(disk)] [$(wlan)] [$(clock)]"
 done
