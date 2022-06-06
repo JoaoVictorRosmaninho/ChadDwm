@@ -6,73 +6,65 @@
 interval=0
 
 # load colors
-. ~/.src/chadwm/scripts/bar_themes/onedark
+. ~/.src/ChadDwm/scripts/bar_themes/nord
 
 cpu() {
-	cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
-
-	printf "CPU"
-	printf "^c$white^ ^b$grey^ $cpu_val"
+  cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
+  printf "^c$white^CPU "
+  printf "^c$red^$cpu_val"
+  printf "^c$white^"
 }
 
 pkg_updates() {
-	#updates=$(doas xbps-install -un | wc -l) # void
-	 updates=$(checkupdates | wc -l)   # arch , needs pacman contrib
-	# updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
+  updates=$(doas xbps-install -un | wc -l) # void
+  # updates=$(checkupdates | wc -l)   # arch , needs pacman contrib
+  # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
 
-	if [ -z "$updates" ]; then
-		printf "^c$green^  Fully Updated"
-	else
-		printf "^c$green^  $updates"" updates"
-	fi
+  if [ -z "$updates" ]; then
+    printf "^c$green^  Fully Updated"
+  else
+    printf "^c$green^  $updates"" updates"
+  fi
 }
 
-#battery() {
-#	get_capacity="$(cat /sys/class/power_supply/BAT1/capacity)"
-#	printf "^c$blue^   $get_capacity"
-#}
-
-#brightness() {
-#	printf "^c$red^   "
-#	printf "^c$red^%.0f\n" $(cat /sys/class/backlight/*/brightness)
-#}
-
-temp() {
-    TEMP="$(
-        sensors|awk 'BEGIN{i=0;t=0;b=0}/id [0-9]/{b=$4};/Core/{++i;t+=$3}END{if(i>0){printf("%0.1f\n",t/i)}else{sub(/[^0-9.]/,"",b);print b}}'
-        )"
-    printf " :  " 
-    printf "$TEMP"
+battery() {
+  get_capacity="$(cat /sys/class/power_supply/BAT1/capacity)"
+  printf "^c$blue^   $get_capacity"
 }
 
-disk() {
-  total = $(df -h / | awk '{ if ($6 == \"/\") print $4, $5 }')
-  printf "  root: " 
-  printf $total 
+brightness() {
+  printf "^c$red^   "
+  printf "^c$red^%.0f\n" $(cat /sys/class/backlight/*/brightness)
 }
 
 mem() {
-	printf "^c$blue^^b$black^  "
-	printf "^c$blue^ $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)"
+  printf "MEM "
+  printf "^c$red^ $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)"
+  printf "^c$white^"
 }
 
 wlan() {
 	case "$(cat /sys/class/net/wl*/operstate 2>/dev/null)" in
-	up) printf "^c$black^  ^b$blue^  ^d^%s" " ^c$blue^Connected" ;;
-	down) printf "^c$black^ ^b$blue^ 󰤭 ^d^%s" " ^c$blue^Disconnected" ;;
+	up) printf " ^c$green^Connected^c$white^" ;;
+	down) printf "^c$red^Disconnected^c$white^" ;;
 	esac
 }
 
+temp() {
+  TEMP="$(sensors|awk 'BEGIN{i=0;t=0;b=0}/id [0-9]/{b=$4};/Core/{++i;t+=$3}END{if(i>0){printf("%0.1f\n",t/i)}else{sub(/[^0-9.]/,"",b);print b}}')"
+printf "t° ^c$red^ $TEMP"
+  printf "^c$white^"
+}
+
 clock() {
-	#printf "^c$black^ ^b$darkblue^ 󱑆 "
-	printf "$(date '+%I:%M %p') "
+        dte="$(date +"%a, %B %d %l:%M%p"| sed 's/  / /g')"
+        printf "$dte"
 }
 
 while true; do
 
-	[ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(pkg_updates)
-	interval=$((interval + 1))
+  [ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(pkg_updates)
+  interval=$((interval + 1))
 
-        sleep 1 && xsetroot -name "$updates  [$(cpu) $(temp)] [$(mem)] [$(wlan)] [$(clock)]"
-        #sleep 1 && xsetroot -name " [$(cpu) $(temp)] [$(mem)] [$(wlan)] [$(clock)]"
+  sleep 1 && xsetroot -name "[$(cpu)] [$(mem)] [$(temp)] [$(wlan)] [$(clock)]"
 done
