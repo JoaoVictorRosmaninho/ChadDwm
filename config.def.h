@@ -127,7 +127,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *term[]  = { "xfce4-terminal", NULL }; 
-static const char *nnn[] = {"xfce4-terminal", "-x", "nnn",  NULL};
+static const char *nnn[] = {"xfce4-terminal", "-x", "nnn", "-de",   NULL};
 static const char *rofi[]  = { "rofi", "-combi-modi", "drun,ssh", "-theme", "solarized", "-font", "hack 10", "-show", "combi",  "-icon-theme", "Papirus", "-show-icons", NULL };
 static const char *xi[] = {"xbacklight", "-inc", "7", NULL};
 static const char *xd[] = {"xbacklight", "-dec", "7", NULL};
