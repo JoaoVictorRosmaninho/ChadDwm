@@ -29,8 +29,8 @@ static const int horizpadtabo       = 15;
 static const int scalepreview       = 4;
 static       int tag_preview        = 0;        /* 1 means enable, 0 is off */
 
-static const char *fonts[]          = { "JetBrainsMono Nerd Font:style:medium:size=10",
-                                        "Material Design Icons-Regular:size=10",
+static const char *fonts[]          = { 
+                                        "Material Design Icons-Regular:size=10"
                                       };
 static const int colorfultag        = 1;  /* 0 means use SchemeSel for selected non vacant tag */
 
@@ -57,7 +57,7 @@ static const char *colors[][3]      = {
 
 /* tagging */
 //static char *tags[] = {"","", "", "", "", ""};
-static char *tags[] = { "", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
+static char *tags[] = { "I",  "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
 
 static const char* eww[]      = { "eww", "open" , "eww", NULL };
 
@@ -126,9 +126,8 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-//static const char *term[]  = {  "st", NULL }; // change this to your term
-static const char *term[]  = {  "xfce4-terminal", NULL }; // change this to your term
-static const char *ranger[] = {"st", "ranger",  NULL};
+static const char *term[]  = { "xfce4-terminal", NULL }; 
+static const char *nnn[] = {"xfce4-terminal", "nnn",  NULL};
 static const char *rofi[]  = { "rofi", "-combi-modi", "drun,ssh", "-theme", "solarized", "-font", "hack 10", "-show", "combi",  "-icon-theme", "Papirus", "-show-icons", NULL };
 static const char *xi[] = {"xbacklight", "-inc", "7", NULL};
 static const char *xd[] = {"xbacklight", "-dec", "7", NULL};
@@ -145,7 +144,8 @@ static Key keys[] = {
     {MODKEY, XK_u, spawn,   SHCMD("maim --select | xclip -selection clipboard -t image/png")},
     {0, XF86MonBrightnessDown, spawn, {.v = xd}},
     {0, XF86MonBrightnessUp, spawn, {.v = xi}},
-    { MODKEY,             	    XK_Print,  spawn,          {.v = scrot } },
+    { MODKEY,                       XK_r,      spawn,           {.v = nnn} },
+    { MODKEY,             	        XK_Print,  spawn,          {.v = scrot } },
     { MODKEY,                       XK_o,      spawn,          {.v = scrot_retangule } },
     { MODKEY,                       XK_Right,  view_adjacent,  { .i = +1 } },
     { MODKEY,                       XK_Left,   view_adjacent,  { .i = -1 } }, 
@@ -154,7 +154,6 @@ static Key keys[] = {
     { MODKEY,                       XK_j,      focusstack,     {.i = -1 } },
     { MODKEY,                       XK_k,      focusstack,     {.i = +1 } },
     { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-    { MODKEY,			    XK_r,      spawn, 	       {.v = ranger }}, 
     { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
     { MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
     { MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
